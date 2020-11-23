@@ -1,0 +1,169 @@
+﻿Build1=Default,com.KashLend.cleanpesa
+File1=AccLoginsPage.bal
+File10=LocationPage.bal
+File11=NamesPage.bal
+File12=OverviewPage.bal
+File13=RejectPage.bal
+File14=ReviewPage.bal
+File15=SaveConfirmPage.bal
+File16=SavingsPage.bal
+File17=WelcomePage.bal
+File2=ApplyConfirmPage.bal
+File3=ApplyPage.bal
+File4=ClaimPage.bal
+File5=DirectoryPage.bal
+File6=EducLevPage.bal
+File7=IDPage.bal
+File8=KinPage.bal
+File9=Layout.bal
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup17=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=core
+Library2=xui
+Library3=clipboard
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="28"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
+Module1=AccLogin
+Module10=Location
+Module11=Name
+Module12=RejectPage
+Module13=Reviews
+Module14=SaveConfirm
+Module15=Savings
+Module16=Starter
+Module17=Vuka
+Module2=Apply
+Module3=ApplyConfirm
+Module4=Claim
+Module5=DetailsOverview
+Module6=Directory
+Module7=EducLev
+Module8=Id_Number
+Module9=Kin
+NumberOfFiles=17
+NumberOfLibraries=3
+NumberOfModules=17
+Version=10
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: KashLend
+	#VersionCode: 1
+	#VersionName: 1
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Private xui As XUI
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	Private Panel1 As Panel
+	Private Label1 As Label
+	Private LblMessage As Label
+	Private BtnStart As Button
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("WelcomePage")
+	Activity.Title=Vuka.title
+	'Activity.Color=Vuka.B_Colors
+		
+	Dim PageColors As ColorDrawable
+	PageColors.Initialize(Vuka.B_Colors,0)
+	Panel1.Background=PageColors
+	
+	BtnStart.Text="Get Started"
+	BtnStart.TextColor=Colors.Black
+	BtnStart.TextSize=15
+	
+	Label1.Text=$"Easy steps to apply"$
+	Label1.TextColor=Colors.Black
+	Label1.TextSize=14
+	Label1.Gravity=Gravity.CENTER
+	
+	Dim listses As List
+	listses.Initialize
+	If File.Exists(File.DirInternal,"data5.dat")=False Then
+		Dim lists As List
+		lists.Initialize
+		If File.Exists(File.DirInternal,"data4.dat")Then
+			LblMessage.Visible=True
+			LblMessage.Text="1"
+			LblMessage.TextColor=Colors.Red
+			LblMessage.TextSize=25
+			LblMessage.Gravity=Gravity.CENTER
+		Else
+			LblMessage.Background=PageColors
+			LblMessage.Visible=False
+		End If
+	Else
+		LblMessage.Background=PageColors
+		LblMessage.Visible=False
+	
+	End If
+	
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+'Sub Button1_Click
+'	xui.MsgboxAsync("Hello world!", "B4X")
+'End Sub
+
+Sub LblMessage_Click
+	If File.Exists(File.DirInternal,"data4.dat")Then
+		StartActivity(RejectPage)
+	End If
+	
+End Sub
+
+Sub BtnStart_Click
+	Dim listingz As List
+	listingz.Initialize
+	If File.Exists(File.DirInternal,"data5.dat")=False And File.Exists(File.DirInternal,"data4.dat")=False Then
+		Dim list As List
+		list.Initialize
+		If File.Exists(File.DirInternal,"data1.dat")Then
+			StartActivity(AccLogin)
+		Else
+			StartActivity(Name)
+		End If
+	
+	Else If File.Exists(File.DirInternal,"data5.dat")=False And File.Exists(File.DirInternal,"data4.dat") Then
+		MsgboxAsync("Missing details.Click the notification message to correct it.","Error")
+	Else If File.Exists(File.DirInternal,"data5.dat") And File.Exists(File.DirInternal,"data4.dat") Then
+		LblMessage.Visible=False
+		StartActivity(AccLogin)
+	End If	
+End Sub

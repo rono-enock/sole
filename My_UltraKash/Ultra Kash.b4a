@@ -1,0 +1,182 @@
+﻿Build1=Default,com.vukapesa.cleandeal
+File1=AccCreatePage1.bal
+File10=KinPage.bal
+File11=loginPage.bal
+File12=loginsPage.bal
+File13=Member.bal
+File14=MembershipPage.bal
+File15=OccupationPage.bal
+File16=OverViewPage.bal
+File17=ProcessingTillPage.bal
+File18=ReviewsPage.bal
+File19=RewardPage.bal
+File2=AccCreatePage2.bal
+File20=SaveConfirm.bal
+File21=SavingPage.bal
+File22=TillSavingsPage.bal
+File23=WelcomePage.bal
+File3=accloginpage.bal
+File4=ApplicationConfirmPage.bal
+File5=applicationpage.bal
+File6=ApplyPage.bal
+File7=ClaimSavingsPage.bal
+File8=DirectoryPage.bal
+File9=EducLevelPage.bal
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup17=Default Group
+FileGroup18=Default Group
+FileGroup19=Default Group
+FileGroup2=Default Group
+FileGroup20=Default Group
+FileGroup21=Default Group
+FileGroup22=Default Group
+FileGroup23=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=core
+Library2=appcompat
+Library3=phone
+Library4=reflection
+Library5=runtimepermissions
+Library6=clipboard
+Library7=mlwifi
+Library8=httputils2
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="29"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~'End of default text.~\n~~\n~~\n~'AddApplicationText(<activity ~\n~'	  android:name="com.facebook.ads.AudienceNetworkActivity" ~\n~'	  android:hardwareAccelerated="true" />)
+Module1=AccCreate
+Module10=EducLevel
+Module11=Inuka
+Module12=InukaLoan
+Module13=login
+Module14=Membership
+Module15=MembershipSelection
+Module16=NextOfKin
+Module17=Occupation
+Module18=ProcessingTill
+Module19=Reviews
+Module2=AccCreate2
+Module20=Reward
+Module21=SaveConfirmPage
+Module22=SavingsPage
+Module23=Starter
+Module24=TillSavings
+Module3=AccLogin
+Module4=AccLogins
+Module5=ApplicationConfirm
+Module6=Apply
+Module7=ClaimSavings
+Module8=DetailsOverView
+Module9=Directory
+NumberOfFiles=23
+NumberOfLibraries=8
+NumberOfModules=24
+Version=10
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Vukash
+	#VersionCode: 17
+	#VersionName: 17
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+'#AdditionalJar : recyclerview-v7.aar
+'#AdditionalJar : DebugSettings.aar
+'#AdditionalJar : AudienceNetwork.aar
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	'Dim page As Int = Colors.ARGB(147,107,228,255)
+	Dim btn As Int = Colors.ARGB(182,223,255,255)
+	'cadb56fd-8809-42e7-9dee-d81b80eb817a
+	Dim mywifi As MLwifi
+	
+	Dim job1 As HttpJob
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+
+	Private Panel1 As Panel
+	Private Label1 As Label
+	Private Label2 As Label
+	Private BtnStart As Button
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
+	Activity.LoadLayout("WelcomePage")
+	Dim page As ColorDrawable
+	page.Initialize(Inuka.pages,0)
+	'Dim btn As ColorDrawable
+	'btn.Initialize(Inuka.btns,0)
+	
+	job1.Initialize("Downloader", Me)
+	Panel1.Background=page
+	
+    'BtnStart.Color=btn
+	BtnStart.Text="Get Started"
+	BtnStart.TextColor=Colors.Black
+	BtnStart.TextSize=15
+	
+	Label1.Text=$"Welcome To ${Starter.Loantittle}"$
+	Label1.TextColor=Colors.Black
+	Label1.TextSize=20
+	
+	Label2.Text=$" Easy Steps To Apply:
+1.First create your account.
+2.Save
+3.Apply
+
+Get started now!"$
+	Label2.TextColor=Colors.Black
+	
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+
+Sub BtnStart_Click
+	
+	If Not(mywifi.isOnline) Then
+		MsgboxAsync("Network connection failed","Error")
+		Return
+	End If
+	
+	Dim listing As List
+	listing.Initialize
+	If File.Exists(File.DirInternal,"data1.dat")Then
+		Dim red As String=File.ReadList(File.DirInternal,"data1.dat")
+		
+		StartActivity(Reviews)
+	Else
+		StartActivity(login)
+	End If
+	
+End Sub
